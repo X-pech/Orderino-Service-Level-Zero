@@ -1,0 +1,17 @@
+postgres:
+  url: "195.161.68.76"
+  port: 5432
+  db: "wbtechl0"
+  user: "wbtechl0service"
+  password: "No"
+  tableName: "orders"
+  idColumn: "order_uid"
+  dataColumn: "order_json"
+stan:
+  url: "nats://curie.xpech.ru"
+  listenerName: "OrdersStorage"
+  clusterName: "test-cluster"
+  topicName: "orders"
+  testPublisherName: "Publishino"
+app:
+  port: 8080

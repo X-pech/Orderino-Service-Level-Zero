@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/marx-css/css/marx.min.css">
+    <title>Заказы ёмаё)</title>
+</head>
+
+<body>
+    <style>
+        :root {
+            --lazor: #088CE8;
+        }
+
+        main,
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #get-order-form,
+        .order-card {
+            color: #FFFFFF;
+
+            max-width: 800px;
+            margin: 3em auto;
+            background-color: var(--lazor);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .input-wrapper {
+            margin: 10px 0;
+        }
+
+        .input-wrapper>label {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        input[type=submit],
+        .order-done {
+            background-color: #FFFFFF;
+            color: var(--lazor);
+            font-size: 1.2em;
+            margin-top: 1.2em;
+        }
+
+        #order-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            background-color: var(--lazor);
+
+        }
+    </style>
+    <main>
+        <form id="get-order-form">
+            <h1>Получить заказ</h1>
+            <div class="input-wrapper">
+                <input class="input-form" id="order_uid" name="order_uid" type="text" required>
+                <label for="order_uid">UID Заказа</label>
+            </div>
+            <div class="input-wrapper">
+                <input id="getbutton" type="submit" value="Получить" />
+            </div>
+        </form>
+
+        <div class="order-card"> 
+
+        </div>
+
+    </main>
+
+    <script>
+        var getbutton = document.getElementById("getbutton");
+        var field = document.getElementById("order_uid");
+
+        async function loadInfo(order_uid) {
+            console.log(order_uid)
+            let response = await fetch(`http://localhost:8080/json?order_uid=${order_uid}`)
+            let info = await response.json()
+            document.querySelector(".order-card").innerHTML = `<pre style="background-color: #00000000;"><code style="color: white;">${JSON.stringify(info, null, 4)}</code></pre>`
+        }
+
+        getbutton.addEventListener('click', function(event) {
+            if (field.checkValidity()) {
+                event.preventDefault();
+                loadInfo(field.value);
+            }
+        })
+    </script>
+</body>
+
+</html>
